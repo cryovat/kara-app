@@ -1,0 +1,75 @@
+<template>
+
+  <section class="au-animate">
+    <header>
+      <h4>${heading}</h4>
+
+      <form class="form-vertical">
+
+        <div class="form-group">
+          <select class="form-control" value.bind="selectedCategory">
+            <option value="">All categories</option>
+            <option repeat.for="category of categories" value.bind="category.Name">
+              ${category.Name} (${category.SongCount})
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-8">
+              <div class="input-group">
+                <input class="form-control" type="search" placeholder="Artist or song title" value.bind="searchText"></input>
+
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button" aria-label="Clear" click.delegate="clearSearch()">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  </button>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-xs-4">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" checked.bind="secretSong" />
+                  Secret
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+      <p class="alert alert-info" show.bind="secretSong">
+        <strong>Sneaky mode engaged.</strong> Others won't see the name of your next song!
+      </p>
+
+    </header>
+
+    <div class="list-group">
+        <a repeat.for="song of searchResults" class="list-group-item" href="#" click.trigger="$parent.enqueue(song.Id)">
+          <strong>${song.Artist}</strong> - ${song.Title}
+        </a>
+    </div>
+
+    <nav>
+
+      <ul class="pager">
+
+        <li class="previous" show.bind="hasPrevious">
+          <a href="#" click.delegate="previousPage()"><span aria-hidden="true">&larr;</span> Previous</a>
+        </li>
+
+        <li class="next" show.bind="hasNext">
+          <a href="#" click.delegate="nextPage()">Next <span aria-hidden="true">&rarr;</span></a>
+        </li>
+
+      </ul>
+
+    </nav>
+  </section>
+
+
+</template>

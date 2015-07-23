@@ -1,0 +1,52 @@
+<template>
+  <require from="./utils/timed"></require>
+
+  <section class="au-animate" timed="interval: 500; callback.call: refresh()">
+
+    <h4>Now Playing</h4>
+
+    <header>
+
+      <p class="alert alert-warning" if.bind="!currentSong">
+          <strong>It's quiet.</strong> Bust a move! <a href="" click.delegate="showSearch()">Make some noise!</a>
+      </p>
+
+      <div class="panel panel-primary" if.bind="currentSong">
+        <div class="panel-heading">
+          ${currentSong.Artist} - ${currentSong.Title}
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal">
+            <p>Requested by <strong>${currentSong.Player.Name}</strong></p>
+
+            <div class="btn-group btn-group-justified" role="group">
+              <div class="btn-group btn-group-md" role="group">
+                <button click.delegate="restart()" type="button" class="btn btn-default">Restart</button>
+              </div>
+              <div class="btn-group btn-group-md" role="group">
+                <button click.delegate="skip()" type="button" class="btn btn-default">Skip</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </header>
+
+    <ul class="list-group">
+      <li class="list-group-item" repeat.for="item of queue">
+        <span class="badge" css="background-color: ${item.Player.HexColor}">
+          ${item.Player.Name}
+        </span>
+        <span if.bind="!item.Secret">${item.Artist} -</span> ${item.Title}
+      </li>
+    </ul>
+
+    <p class="text-center" if.bind="currentSong">
+      <a href="" class="block" click.delegate="showSearch()">Add another song!</a>
+    </p>
+
+  </section>
+
+</template>

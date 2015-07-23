@@ -1,0 +1,34 @@
+<template>
+  <section class="au-animate">
+
+    <h4>Player</h4>
+
+    <div class="alert alert-info" role="alert" show.bind="unknownPlayer">
+      <strong>Hi there!</strong> We need a name and color so that people know who you are! 😁
+    </div>
+
+    <form>
+      <div class="form-group">
+        <label for="pn">Name</label>
+        <input type="text" value.bind="name" class="form-control" id="pn" placeholder="Name">
+      </div>
+      <div class="form-group">
+        <label for="clrs">Flavour</label> <div css.bind="colorPreview" class="badge">Yay!</div>
+
+        <div class="radio" repeat.for="color of colors">
+          <label>
+            <input type="radio" name="clrs" value.bind="color.hex" checked.bind="$parent.color" />
+            ${color.name}
+          </label>
+        </div>
+      </div>
+
+      <div class="btn-group btn-group-justified" role="group">
+        <div class="btn-group btn-group-md" role="group">
+          <button click.delegate="save()" disabled.bind="isInvalid" type="button" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+
+    </form>
+  </section>
+</template>
