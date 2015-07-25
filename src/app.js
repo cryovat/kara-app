@@ -36,7 +36,6 @@ class RequireNameStep {
 
     if (routingContext.nextInstructions.some(i => i.config.auth)) {
       if (this.api.canEnqueue !== true) {
-        console.log("aborting!");
         return next.cancel(new Redirect('player'));
       }
     }

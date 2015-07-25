@@ -1,4 +1,4 @@
-import {inject} from 'aurelia-framework';
+import {computedFrom, inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 
 import {ApiClient} from './backend/api-client';
@@ -9,10 +9,20 @@ export class Control {
   betweenSongs = true;
 
   currentSong = null;
+  queue = [];
 
   constructor(api, router){
     this.api = api;
     this.router = router;
+  }
+
+  @computedFrom('queue')
+  get hasMoreSongs() {
+    return this.queue && this.queue.length > 0;
+  }
+
+  get playerName() {
+    return this.api.playerName;
   }
 
   showSearch() {
@@ -49,6 +59,13 @@ export class Control {
       });
     }
   }
+
+  pause() {
+    return this.api.pause().then(() => {
+      this.refresh();
+    });
+  }
+
 
   skip() {
     if (confirm("Skip current song?")) {

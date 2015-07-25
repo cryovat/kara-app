@@ -55,6 +55,10 @@ export class ApiClient {
     return this.http.createRequest("playback/restart").asPost().withContent({}).withHeader("Content-Type", "application/json").send();
   }
 
+  pause() {
+    return this.http.createRequest("playback/pause").asPost().withContent({}).withHeader("Content-Type", "application/json").send();
+  }
+
   skip() {
     return this.http.createRequest("playback/skip").asPost().withContent({}).withHeader("Content-Type", "application/json").send();
   }

@@ -5,7 +5,7 @@ import {ApiClient} from 'backend/api-client';
 
 @inject(ApiClient, Router)
 export class Player{
-
+  heading = "Player Profile";
   color = "#000000";
 
   colors = [
@@ -28,11 +28,19 @@ export class Player{
     return !this.color || !this.name;
   }
 
+  get hasProfile() {
+    return this.api.canEnqueue === true;
+  }
+
   constructor(api, router){
     this.api = api;
     this.router = router;
 
     this.reset();
+  }
+
+  close() {
+    this.router.navigate('');
   }
 
   save() {

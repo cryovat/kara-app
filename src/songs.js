@@ -7,12 +7,13 @@ import linkParser from 'parse-link-header';
 
 @inject(ApiClient, Router)
 export class Songs{
-  heading = 'Songs';
+  heading = 'Song Library';
   @bindable selectedCategory = '';
   categories = [];
 
   @bindable searchText = '';
   searchResults = [];
+  showCategories = false;
   secretSong = false;
   baseUrl = 'songs';
 
@@ -33,6 +34,22 @@ export class Songs{
   constructor(api, router){
     this.api = api;
     this.router = router;
+  }
+
+  toggleCategories() {
+    if (this.showCategories) {
+      this.selectedCategory = "";
+    }
+
+    this.showCategories = !this.showCategories;
+  }
+
+  toggleSneak() {
+    this.secretSong = !this.secretSong;
+  }
+
+  close() {
+    this.router.navigate('');
   }
 
   clearSearch() {
@@ -79,9 +96,6 @@ export class Songs{
                   : this.api.searchSongs(this.selectedCategory, this.searchText);
 
     return rq.then(response => {
-
-      console.log(response);
-
       var links = linkParser(response.headers.headers["Link"]);
 
       this.startUrl = links && links.start ? links.start.url : "";
